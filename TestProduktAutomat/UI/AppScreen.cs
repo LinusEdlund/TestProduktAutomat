@@ -88,9 +88,8 @@ namespace TestProduktAutomat.UI
             Console.Clear();
             Console.Title = "Produkt-Automat";
             Console.ForegroundColor = ConsoleColor.White;
-
-            Console.WriteLine("\n-------------------------------Welcome to Produkt-Automat-------------------------------\n");
-            Console.WriteLine("");
+            Utility.PrintCenter("Welcome to Produkt-Automat", Console.WindowWidth);
+            
             Utility.PressEnterToContinue();
 
 
@@ -216,6 +215,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Use:
+                    UseDrinks();
 
                     break;
 
@@ -261,6 +261,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Use:
+                    UseKläder();
 
                     break;
 
@@ -306,7 +307,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Use:
-
+                    UseMat();
                     break;
 
                 case (int)Option.ViewPlånbok:
@@ -465,6 +466,44 @@ namespace TestProduktAutomat.UI
 
 
         }
+
+        public void UseDrinks()
+        {
+            
+            
+            
+                for (int i = 0; i <= Drink.DrinkList.Count; i++)
+                {
+                    Drink.DrinkList[i].Use();
+                    Utility.PressEnterToContinue();
+                    break;
+
+                }
+
+            
+            
+        }
+
+        public void UseKläder()
+        {
+            for (int i = 0; i < Kläder.KläderList.Count; i++)
+            {
+                Kläder.KläderList[i].Use();
+                Utility.PressEnterToContinue();
+                break;
+            }
+        }
+
+        public void UseMat()
+        {
+            for (int i = 0; i < Mat.MatList.Count; i++)
+            {
+                Mat.MatList[i].Use();
+                Utility.PressEnterToContinue();
+                break;
+            }
+        }
+
 
 
         //--------------------------------------------------------------------------------------------------------------------------------------------

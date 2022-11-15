@@ -53,6 +53,13 @@ namespace TestProduktAutomat.UI
         }
 
 
+        public static void PrintCenter(string text, int width)
+        {
+            var hf =  (width + text.Length) / 2;
+            var fyext = text.PadLeft(hf, '-').PadRight(width, '-');
+            Console.WriteLine(fyext);
+        }
+
         //fråga lärare om det går
         //public static void PrintOutList(List<var> name)
         // {

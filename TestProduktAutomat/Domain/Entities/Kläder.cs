@@ -57,7 +57,7 @@ namespace TestProduktAutomat.Domain.Entities
 
         public void Use()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Den här produkten används för att ha på sig på kroppen");
         }
 
         void IOption.Description()

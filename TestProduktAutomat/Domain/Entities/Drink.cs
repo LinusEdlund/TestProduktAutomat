@@ -72,8 +72,8 @@ namespace TestProduktAutomat.Domain.Entities
 
         public void Use()
         {
-            Console.WriteLine("Den här produkten används för att dricka");
-            //försök använd den
+            Console.WriteLine("Den här produkten används för att drickas");
+            
         }
 
         void IOption.Description()
