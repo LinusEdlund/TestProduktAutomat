@@ -9,7 +9,7 @@ using TestProduktAutomat.Domain.Plånbok;
 
 namespace TestProduktAutomat.Domain.Abstrakt
 {
-    public abstract class Iteam
+    public abstract class Item
     {
 
         public int Id { get; set; }
@@ -21,7 +21,7 @@ namespace TestProduktAutomat.Domain.Abstrakt
         public static List<ShopingList> shopingLists = new List<ShopingList>();
 
 
-        public Iteam(int id, string name, int prize, string beskrivning, bool sold)
+        public Item(int id, string name, int prize, string beskrivning, bool sold)
         {
             this.Id = id;
             this.Name = name;

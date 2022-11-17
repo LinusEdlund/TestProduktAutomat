@@ -16,14 +16,6 @@ namespace TestProduktAutomat.App
             appScreen.InitializeDataMonye();
             appScreen.Run();
 
-
-
-
-
-
-
-
-
         }
     }
 }

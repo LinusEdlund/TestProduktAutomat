@@ -4,11 +4,12 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using TestProduktAutomat.Domain.Interface;
 using TestProduktAutomat.UI;
 
 namespace TestProduktAutomat.Domain.Plånbok
 {
-    internal class Plånboken
+    internal class Plånboken 
     {
         public int EnKrona { get; set; }
         public int FemKrona { get; set; }
@@ -18,6 +19,7 @@ namespace TestProduktAutomat.Domain.Plånbok
         public int HundraLap { get; set; }
         public static int summa { get; set; } = 0;
 
+        //Jag har en lista för varje peng (vet inte om man kunde ha gjort på något bättre sätt)
         public static List<int> enkrona = new List<int>();
         public static List<int> femkrona = new List<int>();
         public static List<int> tiokrona = new List<int>();
@@ -49,19 +51,23 @@ namespace TestProduktAutomat.Domain.Plånbok
         public static int Amount()
         {
 
-
+            //Det här är utseendet i plånboken
             Console.Clear();
             Console.WriteLine($"Your accont balace is {summa}kr");
             Console.WriteLine("");
             Console.WriteLine($":1. {enkrona.Count}st 1-kronor         4. {tjugolapp.Count}st 20-lappar");
-            Console.WriteLine($":2. {femkrona.Count}st 5-kronor        5. {femtiolapp.Count}st 50-lappar");
-            Console.WriteLine($":3. {tiokrona.Count}st 10-kronor      6. {hundralapp.Count}st 100-lappar");
+            Console.WriteLine($":2. {femkrona.Count}st 5-kronor         5. {femtiolapp.Count}st 50-lappar");
+            Console.WriteLine($":3. {tiokrona.Count}st 10-kronor        6. {hundralapp.Count}st 100-lappar");
             Console.WriteLine(":0.Back");
 
 
 
+            
 
             int selectedAmount = Validator.Convert<int>("option (vilken valör vill du ha):");
+
+            //här har vi vad som händer efter man har tryckt vilken valör man vill ha
+            //Så den tar bort först från listan sen addar den till summan efter de får vi ut hur mycket personen satte in
 
             switch (selectedAmount)
             {
@@ -73,6 +79,7 @@ namespace TestProduktAutomat.Domain.Plånbok
                     {
                         for (int i = 0; i < e; i++)
                         {
+                            //0 eftersom listan uppdateras efter varje loop
                             Plånboken.enkrona.Remove(Plånboken.enkrona[0]);
 
                         }
@@ -244,6 +251,28 @@ namespace TestProduktAutomat.Domain.Plånbok
             }
 
 
+
+
+
+        }
+
+        public static void Exit()
+        {
+            
+            Console.WriteLine($"\n\nHär får du tillbaka {summa}kr");
+
+            //Eftersom jag använd int så kommer den inte ge tillbaka t.ex 1,42131
+            //det här gör så jag avrundar uppot 
+            int hundra = summa / 100;
+            int femtio = (summa % 100) / 50;
+            int tjugio = (summa % 50) / 20;
+            int tio = (summa % 20) / 10;
+            int fem = (summa % 10) / 5;
+            int ett = (summa % 5) / 1;
+
+            summa -= summa;
+
+            Console.WriteLine($"{hundra} hundralappar, {femtio} femtiolappar, {tjugio} tjugolappar, {tio} tiokronor, {fem} femkronor, {ett} enkronor");
 
 
 

@@ -12,7 +12,7 @@ namespace TestProduktAutomat.Domain.Plånbok
 {
     public class ShopingList 
     {
-        
+        //en lista på varorna som personen har köpt
 
         public string ItemName { get; set; }
         public Decimal TransactionAmount { get; set; }

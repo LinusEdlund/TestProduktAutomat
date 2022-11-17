@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace TestProduktAutomat.Domain.Interface
 {
-    /// <summary>
-    /// Denna ska komma efter category 
-    /// vill ha dessa alternativen
-    /// efter de ska lista komma under 
-    /// </summary>
+    
     public interface IOption
     {
-        void Description();
+        void _Description();
         void Buy();
         void Use();
 

@@ -10,7 +10,7 @@ using TestProduktAutomat.UI;
 
 namespace TestProduktAutomat.Domain.Entities
 {
-    public class Kläder : Iteam, IOption
+    public class Kläder : Item, IOption
     {
 
         public string Matrial { get; set; }
@@ -30,15 +30,24 @@ namespace TestProduktAutomat.Domain.Entities
             {
                 if (Sold == false)
                 {
+                    Console.WriteLine($"Are you sure you want to buy {this.Name} for {this.Prize}kr");
+                    int opt = Validator.Convert<int>("1 to confirm 2 to cancel");
+                    if (opt == 1)
+                    {
+                        Utility.PrintMessage($"\nYou have now successfully purchased {this.Name} for {this.Prize}\n");
 
-                    Utility.PrintMessage($"\nYou have now successfully purchased {this.Name} for {this.Prize}\n");
+                        ShopingList s = new ShopingList(this.Name, this.Prize);
+                        shopingLists.Add(s);
 
-                    ShopingList s = new ShopingList(this.Name, this.Prize);
-                    shopingLists.Add(s);
+                        this.Sold = true;
 
-                    this.Sold = true;
-
-                    Plånboken.summa -= this.Prize;
+                        Plånboken.summa -= this.Prize;
+                    }
+                    else
+                    {
+                        Utility.PrintMessage("You have canceled it", false);
+                    }
+                    
 
 
                 }
@@ -60,9 +69,19 @@ namespace TestProduktAutomat.Domain.Entities
             Console.WriteLine("Den här produkten används för att ha på sig på kroppen");
         }
 
-        void IOption.Description()
+        public void _Description()
         {
-            throw new NotImplementedException();
+            if (Sold == false)
+            {
+                Console.WriteLine("");
+                Console.WriteLine($"Here is the description of {this.Name}:");
+                Console.WriteLine(this.Beskrivning);
+                Utility.PressEnterToContinue();
+            }
+            else
+            {
+                Utility.PrintMessage($"This item is no longer availble", false);
+            }
         }
     }
 }

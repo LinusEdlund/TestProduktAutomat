@@ -12,23 +12,24 @@ using TestProduktAutomat.Domain.Enums;
 using TestProduktAutomat.Domain.Interface;
 using TestProduktAutomat.Domain.Plånbok;
 using TestProduktAutomat.UI;
+using Validator = TestProduktAutomat.UI.Validator;
 
 namespace TestProduktAutomat.Domain.Entities
 {
-    public class Drink : Iteam, IOption
+    public class Drink : Item, IOption
     {
-        public int Amount { get; set; }
+        
 
         public static List<Drink> DrinkList = new List<Drink>();
 
 
 
-        public Drink(int id, string name, int prize, string beskrivning, int amount, bool sold) : base(id, name, prize, beskrivning, sold)
+        public Drink(int id, string name, int prize, string beskrivning, bool sold) : base(id, name, prize, beskrivning, sold)
         {
 
         }
 
-
+        //här är vad som händer efter man har valt vilken produkt man vill köpa
         public void Buy()
         {
             if (Plånboken.summa >= this.Prize)
@@ -36,14 +37,24 @@ namespace TestProduktAutomat.Domain.Entities
                 if (Sold == false)
                 {
 
-                    Utility.PrintMessage($"\nYou have now successfully purchased {this.Name} for {this.Prize}\n");
+                    Console.WriteLine($"Are you sure you want to buy {this.Name} for {this.Prize}kr");
+                    int opt = Validator.Convert<int>("1 to confirm 2 to cancel");
+                    if (opt == 1)
+                    {
+                        Utility.PrintMessage($"\nYou have now successfully purchased {this.Name} for {this.Prize}kr\n");
 
-                    ShopingList s = new ShopingList(this.Name, this.Prize);
-                    shopingLists.Add(s);
+                        ShopingList s = new ShopingList(this.Name, this.Prize);
+                        shopingLists.Add(s);
 
-                    this.Sold = true;
+                        this.Sold = true;
 
-                    Plånboken.summa -= this.Prize; 
+                        Plånboken.summa -= this.Prize;
+                    }
+                    else
+                    {
+                        Utility.PrintMessage("You have canceled it",false);
+                    }
+                    
 
 
                 }
@@ -59,8 +70,8 @@ namespace TestProduktAutomat.Domain.Entities
                 Utility.PrintMessage($"You dont have enough money to buy {this.Name}. Check Plånbok to see your account balance",false);
             }
 
-           
 
+            
             
 
 
@@ -72,26 +83,25 @@ namespace TestProduktAutomat.Domain.Entities
 
         public void Use()
         {
+            //Vet inte riktig vad som ska vara i use hoppas det var bara det här du vill ha :D
             Console.WriteLine("Den här produkten används för att drickas");
             
         }
 
-        void IOption.Description()
+        public void _Description()
         {
-            throw new NotImplementedException();
+            //här vissas beskrivningen 
+            if (Sold == false)
+            {
+                Console.WriteLine("");
+                Console.WriteLine($"Here is the description of {this.Name}:");
+                Console.WriteLine(this.Beskrivning);
+                Utility.PressEnterToContinue();
+            }
+            else
+            {
+                Utility.PrintMessage($"This item is no longer availble", false);
+            }
         }
-
-       
-
-
-
-
-
-
-        
-
-
-
-      
     }
 }

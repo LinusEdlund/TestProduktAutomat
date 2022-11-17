@@ -18,12 +18,16 @@ namespace TestProduktAutomat.UI
             Console.ReadLine();
         }
 
+
+        
         public static string GetUserInput(string prompt)
         {
             Console.WriteLine($"Enter {prompt}");
             return Console.ReadLine() ?? string.Empty;
         }
 
+
+        //byter färg på texten
         public static void PrintMessage(string msg, bool success = true)
         {
             if (success)
@@ -42,6 +46,7 @@ namespace TestProduktAutomat.UI
         }
 
 
+        //kommer ... animation som jag välja hur lång tid jag vill ha det
         public static void PrintDoAnimation(int timer = 10)
         {
             for (int i = 0; i < timer; i++)
@@ -53,6 +58,8 @@ namespace TestProduktAutomat.UI
         }
 
 
+        //Luis lärde mig det här. Gör så att jag kan få min välkom sak i mitten ovs vilken storlek du har på ditt fönster
+        //och jag kan byta täcken om jag vill
         public static void PrintCenter(string text, int width)
         {
             var hf =  (width + text.Length) / 2;
@@ -60,17 +67,7 @@ namespace TestProduktAutomat.UI
             Console.WriteLine(fyext);
         }
 
-        //fråga lärare om det går
-        //public static void PrintOutList(List<var> name)
-        // {
-        //     int i = 1;
-        //     foreach (var item in name)
-        //     {
-        //         Console.WriteLine($"{i}. " + item.Display);
-        //         i++;
-
-        //     }
-        // }
+       
 
 
     }

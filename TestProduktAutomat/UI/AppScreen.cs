@@ -15,7 +15,8 @@ namespace TestProduktAutomat.UI
     public class AppScreen :  IItems, IPlånbok
     {
         
-        
+        //-----------------------------------------------------------------------------------------------------------------
+        //Det här är all data som matas in i programet
         public void InitializeDataMonye()
         {
             for (int i = 0; i < 10; i++)
@@ -28,9 +29,9 @@ namespace TestProduktAutomat.UI
         {
             Drink.DrinkList = new List<Drink>
             {
-                new Drink(1, "Monster",10,"",2, false),
-                new Drink(2, "Fanta",20,"",2, false),
-                new Drink(3, "Redbull",5,"",2, false)
+                new Drink(1, "Monster",10,"Monster är en energidryck", false),
+                new Drink(2, "Fanta",20,"Fanta är en läsk", false),
+                new Drink(3, "Redbull",5,"Redbull är en energidryck", false)
             };
             
         }
@@ -39,9 +40,9 @@ namespace TestProduktAutomat.UI
         {
             Kläder.KläderList = new List<Kläder>
             {
-                new Kläder(1, "t-shirt", 200, "", "tyg", false),
-                new Kläder(2, "Jeans", 500, "", "tyg", false ),
-                new Kläder(3, "boomul-tröja", 1000, "", "boomul", false)
+                new Kläder(1, "t-shirt", 200, "Är en tröja med små armar", "tyg", false),
+                new Kläder(2, "Jeans", 500, "Ett par byxor", "tyg", false ),
+                new Kläder(3, "bomull tröja", 1000, "Är en lång armad tröja som är gjort av bomull ", "bomull", false)
             };
             
         }
@@ -50,14 +51,21 @@ namespace TestProduktAutomat.UI
         {
             Mat.MatList = new List<Mat>
             {
-                new Mat(1, "Korv",10,"", false),
-                new Mat(2, "Kött",100,"", false),
-                new Mat(3, "skinka",20,"", false)
+                new Mat(1, "Korv",10,"är gjort av kött", false),
+                new Mat(2, "Kött",100,"det kommer från...", false),
+                new Mat(3, "skinka",20,"kommer från per i viken", false)
 
             };
             
         }
+        //-------------------------------------------------------------------------------------------------------------------
+        
 
+
+
+
+        //--------------------------------------------------------------------------------------------------------------------
+        //Den först kör hela programet den andra kör programet utan välkomen menyn
         public void Run()
         {
             Welcome();
@@ -81,8 +89,13 @@ namespace TestProduktAutomat.UI
 
             }
         }
+        //-------------------------------------------------------------------------------------------------------------------
 
 
+
+
+        //-------------------------------------------------------------------------------------------------------------------
+        //Här är utsendet på menyer
         internal static void Welcome()
         {
             Console.Clear();
@@ -126,13 +139,18 @@ namespace TestProduktAutomat.UI
         internal static void ExitOut()
         {
             Console.Clear();
-            Console.WriteLine("Thank you for using...");
+            Console.WriteLine("\nThank you for using Produkt-Automat");
 
-            //here is monye
-            //Kanske också transations
+            
 
         }
+        //----------------------------------------------------------------------------------------------------------------
 
+
+
+
+        //---------------------------------------------------------------------------------------------------------------
+        //Här är vad varje menyval gör den första är för kategori den andra för drinks osv...
         internal void ProcessMenuoption()
         {
             switch (Validator.Convert<int>("an option"))
@@ -187,8 +205,12 @@ namespace TestProduktAutomat.UI
                 case (int)Menu.Exiting:
 
                     ExitOut();
+                    ViewShopingList();
+                    Plånboken.Exit();
+                    Item.shopingLists.Clear();
                     Utility.PrintMessage("You have successfullt exit the app.", true);
 
+                    
                     Run();
                     break;
 
@@ -198,8 +220,7 @@ namespace TestProduktAutomat.UI
             }
 
         }
-        //----------------------------------------------------------------------------------------------------------------------------------------
-        //fösök minska kod!!!
+        
         internal void ProcessOptionDrinks()
         {
             switch (Validator.Convert<int>("an option"))
@@ -211,7 +232,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Description:
-
+                    DrinkDesc();
                     break;
 
                 case (int)Option.Use:
@@ -257,6 +278,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Description:
+                    KläderDesc();
 
                     break;
 
@@ -303,6 +325,7 @@ namespace TestProduktAutomat.UI
                     break;
 
                 case (int)Option.Description:
+                    MatDesc();
 
                     break;
 
@@ -339,11 +362,17 @@ namespace TestProduktAutomat.UI
         }
 
         //-------------------------------------------------------------------------------------------------------------------------------------
-       
+
+
+
+
+       //-------------------------------------------------------------------------------------------------------------------------------------
+       //här vissar jag upp produkterna vad jag har att erbyda på
         public void ViewShopingList()
         {
             Console.WriteLine("");
-            foreach (var item in Iteam.shopingLists)
+            Console.WriteLine("List of iteams you have purchase");
+            foreach (var item in Item.shopingLists)
             {
                 Console.WriteLine(item.DisplayList);
             }
@@ -405,27 +434,123 @@ namespace TestProduktAutomat.UI
 
 
         }
-
-
         //----------------------------------------------------------------------------------------------------------------------------------------
-        //tänk på hur du kan göra mindre kod
-        //här använder du buy 
+
+
+
+        
+        //----------------------------------------------------------------------------------------------------------------------------------------
+        //Det här är i beskrivnings menyvalet. Beskrivningen vissa upp 
+        public void DrinkDesc() 
+        {
+            
+            Console.WriteLine("What iteam do you want a description of?");
+            int number = Validator.Convert<int>("the Id (from the list on top)");
+
+            if (number > Drink.DrinkList.Count)
+            {
+                Utility.PrintMessage("We don't have that iteam", false);
+            }
+            else
+            {
+                for (int i = 0; i <= Drink.DrinkList.Count; i++)
+                {
+
+                    if (number == i)
+                    {
+                        i--;
+                        Drink.DrinkList[i]._Description();
+                        break;
+                    }
+                }
+            }
+            
+
+        }
+
+        public void KläderDesc()
+        {
+
+            Console.WriteLine("What iteam do you want a description of?");
+            int number = Validator.Convert<int>("the Id (from the list on top)");
+
+            if (number > Kläder.KläderList.Count)
+            {
+                Utility.PrintMessage("We don't have that iteam", false);
+            }
+            else
+            {
+                for (int i = 0; i <= Kläder.KläderList.Count; i++)
+                {
+
+                    if (number == i)
+                    {
+                        i--;
+                        Kläder.KläderList[i]._Description();
+                        break;
+                    }
+                }
+            }
+
+
+        }
+
+        public void MatDesc()
+        {
+
+            Console.WriteLine("What iteam do you want a description of?");
+            int number = Validator.Convert<int>("the Id (from the list on top)");
+
+            if (number > Mat.MatList.Count)
+            {
+                Utility.PrintMessage("We don't have that iteam", false);
+            }
+            else
+            {
+                for (int i = 0; i <= Mat.MatList.Count; i++)
+                {
+
+                    if (number == i)
+                    {
+                        i--;
+                        Mat.MatList[i]._Description();
+                        break;
+                    }
+                }
+            }
+
+
+        }
+        //--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        //Det här är i köp menyvalet. 
         public void WhoBuyDrinks()
         {
             Console.WriteLine("What item do you want from the list on top?");
             int number = Validator.Convert<int>("the Id");
 
-            
-            for (int i = 0; i <= Drink.DrinkList.Count; i++)
+            if (number > Drink.DrinkList.Count)
             {
-
-                if (number == i)
+                Utility.PrintMessage("We don't have that iteam",false);
+            }
+            else
+            {
+                for (int i = 0; i <= Drink.DrinkList.Count; i++)
                 {
-                    i--;
-                    Drink.DrinkList[i].Buy();
-                    break;
+
+                    if (number == i)
+                    {
+                        i--;
+                        Drink.DrinkList[i].Buy();
+                        break;
+                    }
                 }
             }
+            
         }
 
 
@@ -434,16 +559,26 @@ namespace TestProduktAutomat.UI
             Console.WriteLine("What item do you want from the list on top?");
             int number = Validator.Convert<int>("the Id");
 
-            for (int i = 0; i <= Kläder.KläderList.Count; i++)
+            if (number > Kläder.KläderList.Count)
             {
-
-                if (number == i)
-                {
-                    i--;
-                    Kläder.KläderList[i].Buy();
-                    break;
-                }
+                Utility.PrintMessage("We don't have that iteam", false);
             }
+            else
+            {
+                for (int i = 0; i <= Kläder.KläderList.Count; i++)
+                {
+
+                    if (number == i)
+                    {
+                        i--;
+                        Kläder.KläderList[i].Buy();
+                        break;
+                    }
+                }
+
+            }
+
+            
         }
 
 
@@ -452,21 +587,34 @@ namespace TestProduktAutomat.UI
             Console.WriteLine("What item do you want from the list on top?");
             int number = Validator.Convert<int>("the Id");
 
-            for (int i = 0; i <= Mat.MatList.Count; i++)
+            if (number > Mat.MatList.Count)
             {
-
-                if (number == i)
+                Utility.PrintMessage("We don't have that iteam", false);
+            }
+            else
+            {
+                for (int i = 0; i <= Mat.MatList.Count; i++)
                 {
-                    i--;
-                    Mat.MatList[i].Buy();
-                    
-                    break;
+
+                    if (number == i)
+                    {
+                        i--;
+                        Mat.MatList[i].Buy();
+
+                        break;
+                    }
                 }
             }
+            
 
 
         }
+        //------------------------------------------------------------------------------------------------------
 
+
+
+        //------------------------------------------------------------------------------------------------------
+        //Det här är i use menyvalet
         public void UseDrinks()
         {
             
@@ -504,10 +652,12 @@ namespace TestProduktAutomat.UI
             }
         }
 
+       //--------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        //--------------------------------------------------------------------------------------------------------------------------------------------
 
+        //----------------------------------------------------------------------------------------------------------------------------------
+        //Denna finns i plånboken menyval
         public void AddMonye()
         {
 
@@ -530,13 +680,11 @@ namespace TestProduktAutomat.UI
                 Utility.PrintDoAnimation();
                 Utility.PrintMessage($"\n\nYou have succefully inserted {selectedAmount}kr to your account");
             }
-            
-            
-            
-            
-            
-
+                                   
+           
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------
+
         
 
 
